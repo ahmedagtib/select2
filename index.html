@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0-beta1/css/bootstrap.min.css" integrity="sha512-o/MhoRPVLExxZjCFVBsm17Pkztkzmh7Dp8k7/3JrtNCHh0AQ489kwpfA3dPSHzKDe8YCuEhxXq3Y71eb/o6amg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    
+</head>
+<body>
+    
+    <select id="selectM" class="js-example-basic-multiple" name="states[]" multiple="multiple">
+        <option value="a">a</option>
+        <option value="b">b</option>
+        <option value="c">c</option>
+        <option value="d">d</option>
+        <option value="selectall">select All</option>
+        <option value="deselectall">Deselect All</option> 
+        <option value="inverse">inverse</option>  
+    </select>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0-beta1/js/bootstrap.bundle.min.js" integrity="sha512-ndrrR94PW3ckaAvvWrAzRi5JWjF71/Pw7TlSo6judANOFCmz0d+0YE+qIGamRRSnVzSvIyGs4BTtyFMm3MT/cg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        
+
+        $(document).ready(function() {
+    $('.js-example-basic-multiple').select2();
+    
+    $('#selectM').on('select2:select',function(e){
+       var theSelection = e.params.data.id;
+        if(theSelection == 'selectall'){
+            $(this).select2('destroy').find('option').prop('selected', 'selected').end().select2(); 
+            $(this).select2('destroy').find('option[value="selectall"]').prop('selected', false).end().select2(); 
+            $(this).select2('destroy').find('option[value="deselectall"]').prop('selected', false).end().select2(); 
+            $(this).select2('destroy').find('option[value="inverse"]').prop('selected', false).end().select2(); 
+           
+        }
+        if(theSelection == 'deselectall'){
+            $(this).select2('destroy').find('option').prop('selected', false).end().select2();
+        }
+
+        if(theSelection == 'inverse'){
+
+           var items = $(this).select2('data');
+         console.log(items)
+
+            var array = [];
+            var j = 0;
+             for(var i = items.length  - 1; i >= 0 ; i--){
+                    array[j] =  items[i];
+                      j++;
+            }
+
+            console.log(array)
+            
+            $(this).select2('destroy').empty().select2({data: array});
+
+            $(this).select2('destroy').find('option[value="selectall"]').prop('selected', false).end().select2(); 
+            $(this).select2('destroy').find('option[value="deselectall"]').prop('selected', false).end().select2(); 
+            $(this).select2('destroy').find('option[value="inverse"]').prop('selected', false).end().select2(); 
+        }
+    }).trigger('change');
+
+   
+
+});
+
+
+    </script>
+
+</body>
+</html>
